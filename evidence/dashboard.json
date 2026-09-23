@@ -1,0 +1,61 @@
+{
+  "dashboard_id": 3,
+  "url": "https://5.23.55.6/public/dashboard/002795a3-c78a-46fd-9c15-6ec062e06689",
+  "cards_verified": [
+    {
+      "card": "Сетей в каталоге",
+      "rows": 1,
+      "status": "completed"
+    },
+    {
+      "card": "Сетей с данными станций",
+      "rows": 1,
+      "status": "completed"
+    },
+    {
+      "card": "Станций в выборке",
+      "rows": 1,
+      "status": "completed"
+    },
+    {
+      "card": "Доступных велосипедов",
+      "rows": 1,
+      "status": "completed"
+    },
+    {
+      "card": "Станции по городам · только 3 сети",
+      "rows": 3,
+      "status": "completed"
+    },
+    {
+      "card": "Доступные велосипеды по городам",
+      "rows": 3,
+      "status": "completed"
+    },
+    {
+      "card": "Сети по странам · весь каталог, топ-12",
+      "rows": 12,
+      "status": "completed"
+    },
+    {
+      "card": "Способы оплаты · только известные",
+      "rows": 4,
+      "status": "completed"
+    },
+    {
+      "card": "Наличие электровелосипедов · данные и пропуски",
+      "rows": 2,
+      "status": "completed"
+    },
+    {
+      "card": "Качество и покрытие снимка",
+      "rows": 3,
+      "status": "completed"
+    },
+    {
+      "card": "Станции: доступность на момент снимка",
+      "rows": 598,
+      "status": "completed"
+    }
+  ]
+}

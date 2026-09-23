@@ -1,0 +1,10 @@
+{
+  "mart_rows": 1376,
+  "networks": 781,
+  "stations": 598,
+  "networks_with_stations": 3,
+  "free_bikes": 1618,
+  "empty_slots": 4108,
+  "hdfs_uri": "hdfs://namenode:8020/user/gilach/dm",
+  "verified_at": "2026-09-23T12:36:34.286306+00:00"
+}

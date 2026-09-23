@@ -1,0 +1,22 @@
+[
+  {
+    "file": "networks.json",
+    "bytes": 398742,
+    "sha256": "b0f37a4067f11c45c5d7e24f4848e31d8f1b6b3fe5adb0778ee21f07af92244e"
+  },
+  {
+    "file": "stations_abu-dhabi-careem-bike.json",
+    "bytes": 11930,
+    "sha256": "cec3c1878948c17334f528d66e7dd0d983e22738882c0e7f5b424b4c8f042854"
+  },
+  {
+    "file": "stations_bergen-bysykkel.json",
+    "bytes": 48047,
+    "sha256": "7947b68e5f296fb2338ece8507560b913901b10fcda51b506ba98d4c6a8c634f"
+  },
+  {
+    "file": "stations_beryl-bcp.json",
+    "bytes": 224394,
+    "sha256": "8e41cf7232e08d829b57c4c0b8f564beab444840485aff6e2fe20e756c5d9c2b"
+  }
+]

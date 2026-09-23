@@ -1,0 +1,89 @@
+name: simulative-citybikes-project
+services:
+  postgres:
+    image: postgres:16-alpine
+    mem_limit: 192m
+    environment:
+      POSTGRES_DB: citybikes
+      POSTGRES_USER: citybikes
+      POSTGRES_PASSWORD: ${PG_PASSWORD:?Run init_env.py}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U citybikes -d citybikes']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  namenode:
+    image: apache/hadoop:3.4.1
+    hostname: namenode
+    user: '0:0'
+    mem_limit: 384m
+    environment:
+      HADOOP_CONF_DIR: /config
+      HADOOP_HEAPSIZE_MAX: '192'
+    volumes:
+      - ./hadoop:/config:ro
+      - namenode:/hadoop/dfs/name
+    command: [bash, -c, 'if [ ! -d /hadoop/dfs/name/current ]; then hdfs namenode -format -nonInteractive; fi; exec hdfs namenode']
+  datanode:
+    image: apache/hadoop:3.4.1
+    hostname: datanode
+    user: '0:0'
+    mem_limit: 384m
+    environment:
+      HADOOP_CONF_DIR: /config
+      HADOOP_HEAPSIZE_MAX: '192'
+    volumes:
+      - ./hadoop:/config:ro
+      - datanode:/hadoop/dfs/data
+    command: [bash, -c, 'exec hdfs datanode']
+    depends_on:
+      - namenode
+  clickhouse:
+    restart: unless-stopped
+    image: clickhouse/clickhouse-server:25.3
+    mem_limit: 768m
+    environment:
+      CLICKHOUSE_DB: citybikes
+      CLICKHOUSE_USER: citybikes_loader
+      CLICKHOUSE_PASSWORD: ${CH_PASSWORD:?Run init_env.py}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: '1'
+    volumes:
+      - chdata:/var/lib/clickhouse
+      - ./clickhouse/limits.xml:/etc/clickhouse-server/config.d/limits.xml:ro
+    ports:
+      - '127.0.0.1:8124:8123'
+  airflow:
+    build: .
+    mem_limit: 1700m
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/state/airflow.db
+      PG_DSN: postgresql://citybikes:${PG_PASSWORD}@postgres:5432/citybikes
+      CH_HOST: clickhouse
+      CH_USER: citybikes_loader
+      CH_PASSWORD: ${CH_PASSWORD}
+      CH_READER_PASSWORD: ${CH_READER_PASSWORD}
+      HDFS_URI: hdfs://namenode:8020/user/gilach/dm
+    volumes:
+      - .:/opt/airflow/project
+      - ./dags:/opt/airflow/dags:ro
+      - airflow-state:/opt/airflow/state
+    depends_on:
+      postgres:
+        condition: service_healthy
+      datanode:
+        condition: service_started
+      clickhouse:
+        condition: service_started
+    command: standalone
+    ports:
+      - '127.0.0.1:8082:8080'
+volumes:
+  pgdata:
+  namenode:
+  datanode:
+  chdata:
+  airflow-state:

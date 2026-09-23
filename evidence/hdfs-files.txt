@@ -1,0 +1,3 @@
+Found 2 items
+-rw-r--r--   1 airflow supergroup          0 2026-09-23 12:36 /user/gilach/dm/_SUCCESS
+-rw-r--r--   1 airflow supergroup      93144 2026-09-23 12:36 /user/gilach/dm/part-00000-2b655a0f-fdef-4641-b864-b6e5e8666130-c000.snappy.parquet
